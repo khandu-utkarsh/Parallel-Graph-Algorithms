@@ -3,6 +3,7 @@
 
 #include<string>
 #include <iostream>
+
 #include <stdlib.h>
 #include <string>
 #include <vector>
@@ -12,6 +13,7 @@
 #include <memory>
 #include <unordered_map>
 #include <functional>
+
 
 //printing functions
 
@@ -54,6 +56,7 @@ class Vertex
     //!Constructor
     Vertex();
     Vertex(long value);
+
     long getDataValue(); 
     long getId(); 
     std::vector<long> getOutNeighbours();
@@ -67,10 +70,12 @@ class Vertex
     void addOutDegree(long v); 
     void addInDegree(long v); 
 
+
     private:
     long p_id;      //!Identifier
 
     long p_dataVal; //!Data supplied as input
+
 
     std::vector<long> InNeighbours; //vector storing all the vertex ids of the vertices which have an edge to this vertex
     std::vector<long> OutNeighbours; //vector storing all teh vertex ids of the vertices which have an edge from this vertex
@@ -83,6 +88,7 @@ class Edge
     public:
     Edge(long startVertexId, long endVertexId);
     Edge(long startVertexId, long endVertexId, double weight);
+
 
     long getStartVertexId();
     long getEndVertexId();
@@ -99,6 +105,7 @@ class Graph
     public:
     Graph();
     bool AddNodeInGraph(int uniqueNodeId, std::shared_ptr<Vertex> &node);
+
     bool AddEdgeInGraph(std::shared_ptr<Edge> &edge);//Done
     std::unordered_map<int, std::shared_ptr<Vertex> > getGraphTable(); //TO DO
     Vertex getVertex(long v) const;
@@ -109,6 +116,7 @@ class Graph
 
     private:
     std::unordered_map<long, std::shared_ptr<Vertex> > p_table_uniqueNodeToVertex;
+
     std::vector<std::shared_ptr<Edge> > p_edges;
 
 };
@@ -169,6 +177,6 @@ class Interface
                                 const std::function<bool(long startVertexIndex, long endVertexIndex)> &F,
                                 const std::function<bool(long vertexIndex)> &C); //Done : Tested
 
-};
 
+};
 #endif //!Ending header include gaurds

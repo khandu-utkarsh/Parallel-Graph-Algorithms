@@ -2,7 +2,6 @@
 #include "../ext/json.hpp"
 using json = nlohmann::json;
 
-
 void PrintV::printVector(std::vector<long> v)
 {
     for(auto it = v.begin(); it < v.end(); it++)
@@ -10,6 +9,7 @@ void PrintV::printVector(std::vector<long> v)
     
     std::cout<<std::endl;
 }
+
 
 VertexIdTracker * VertexIdTracker::vertexIdManager = nullptr;
 
@@ -65,10 +65,12 @@ Vertex::Vertex(long value)
     p_id = VertexIdTracker::getInstance()->FetchNewId();
 }
 
+
 long Vertex::getDataValue()
 {
     return p_dataVal;
 }
+
 
 long Vertex::getId()
 {
@@ -132,6 +134,7 @@ Edge::Edge(long startVertexId, long endVertexId, double weight)
     p_end_vertexId = endVertexId;
     p_weight = weight;
 }
+
 
 long Edge::getStartVertexId()
 {

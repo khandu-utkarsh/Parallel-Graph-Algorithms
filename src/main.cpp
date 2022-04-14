@@ -2,6 +2,7 @@
 #include <filesystem>
 
 
+
 int main(int argc, char** argv)
 {
     if(argc == 1)
@@ -35,6 +36,7 @@ int main(int argc, char** argv)
     for(int nodeIndex = 0; nodeIndex < vertices.size(); ++nodeIndex)
     {
         std::shared_ptr<Vertex> newVertex =  std::make_shared<Vertex>(vertices[nodeIndex]);
+
         graph.AddNodeInGraph(g_vidManager->GetLastGeneratedIdIndex(), newVertex);
         table_dataValueToUniqueId.insert({newVertex->getDataValue(),g_vidManager->GetLastGeneratedIdIndex()});
     }
