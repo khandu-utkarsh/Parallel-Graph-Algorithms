@@ -1,110 +1,67 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
+//#include "../headers/allHeaders.h"
+
 #include<string>
 #include <iostream>
+
+#include <stdlib.h>
+#include <string>
 #include <vector>
+#include <set>
 #include <fstream>
 #include <utility>
 #include <memory>
 #include <unordered_map>
 #include <functional>
 
-//Data structures for the graph
 
-class VertexIdTracker
-{
-    private:
-    VertexIdTracker();      //!For singlton pattern
-    ~VertexIdTracker();
+//printing functions
 
-    public:
-    friend class Vertex;
-    static VertexIdTracker * getInstance();
-    void DestroyIdManager();
-
-    //!Modifiers
-    long FetchNewId();
-
-    //!Access Functions
-    long GetLastGeneratedIdIndex();
-
-    //!Data members
-    private:
-    static VertexIdTracker * vertexIdManager;
-    long p_vertexIdsUsedTill;
-};
-
-
-class Vertex
-{
-    public:        
-
-    //!Constructor
-    Vertex();
-    Vertex(long value);
-    long GetDataValue();
-
-    private:
-    long p_id;      //!Identifier
-
-    long p_dataVal; //!Data supplied as input
-
-
-};
-
-class Edge
+class PrintV
 {
     public:
-    Edge(long startVertexId, long endVertexId);
-    Edge(long startVertexId, long endVertexId, double weight);
-
-    private:
-    long p_start_vertexId;
-    long p_end_vertexId;
-    double p_weight;
+    static void printVector(std::vector<long> v);
 };
 
-class Graph
-{
-    public:
-    Graph();
-    bool AddNodeInGraph(int uniqueNodeId, std::shared_ptr<Vertex> &node);
-    bool AddEdgeInGraph(std::shared_ptr<Edge> &edge);
+class VertexSubset;
+class Graph;
+class Vertex;
 
-
-    private:
-    std::unordered_map<int, std::shared_ptr<Vertex> > p_table_uniqueNodeToVertex;
-    std::vector<std::shared_ptr<Edge> > p_edges;
-
-};
-
-
-class VertexSubset
+class Interface
 {
     public:
 
-    private:
-    std::vector<long > p_vertices;
-};
+    static std::set<long> convertToSet(std::vector<long> v);
 
+    static void RemoveDuplicates(VertexSubset &U); //TO DO: This function removes the duplicates from a vector
 
-class AuxFxns
-{
-    public:
-    static bool LoadGraphFromJason(const std::string &filename, std::vector<int> &vertices, std::vector<std::pair<int, int> > &edges);
-};
-
-class Inferface
-{
-    public:
     static VertexSubset EdgeMap(const Graph &graph,
                                 const VertexSubset &U,
-                                std::function<bool(long startVertexIndex, long endVertexIndex)> &F,
-                                std::function<bool(long vertexIndex)> &C);
+                                const std::function<bool(long startVertexIndex, long endVertexIndex)> &F,
+                                const std::function<bool(long vertexIndex)> &C, long threshold); //Done : Tested
 
-    static VertexSubset VertexMap(const VertexSubset &U,
-                                std::function<bool(long startVertexIndex, long endVertexIndex)> &F);
+    static VertexSubset VertexMap(const VertexSubset &U, 
+                                        const std::function<bool(long vertexIndex)> &F); //Done : Tested
+
+    //private: 
+
+    static VertexSubset EdgeMapSparse(const Graph &graph,
+                                const VertexSubset &U,
+                                const std::function<bool(long startVertexIndex, long endVertexIndex)> &F,
+                                const std::function<bool(long vertexIndex)> &C); //Done : Tested
+
+    static VertexSubset EdgeMapDense(const Graph &graph,
+                                const VertexSubset &U,
+                                const std::function<bool(long startVertexIndex, long endVertexIndex)> &F,
+                                const std::function<bool(long vertexIndex)> &C); //Done : Tested
+
+    static VertexSubset EdgeMapDenseWrite(const Graph &graph,
+                                const VertexSubset &U,
+                                const std::function<bool(long startVertexIndex, long endVertexIndex)> &F,
+                                const std::function<bool(long vertexIndex)> &C); //Done : Tested
+
+
 };
-
 #endif //!Ending header include gaurds
