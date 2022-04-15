@@ -1,19 +1,25 @@
 #include "../headers/allHeaders.h"
+#include <algorithm>
 
-
-std::set<long> Interface::convertToSet(std::vector<long> v)
+std::set<long> Interface::convertToSet(std::vector<long> &v)
 {
+    v.erase(std::unique(v.begin(), v.end()), v.end());
+
+
     std::set<long> s;
-    for (auto x : v) 
+    for (auto &x : v) 
         s.insert(x);
     return s;
 }
 
 void Interface::RemoveDuplicates(VertexSubset &U) //TO DO: This function removes the duplicates from a vector
 {
-    std::set<long> s = convertToSet(U.getVertexSubset());
-    U.getVertexSubset().assign(s.begin(), s.end());
-    return;
+    U.getVertexSubset().erase(std::unique(U.getVertexSubset().begin(), U.getVertexSubset().end()), U.getVertexSubset().end());
+    
+    // std::set<long> s = convertToSet(U.getVertexSubset());
+    // U.getVertexSubset.clear
+    // U.getVertexSubset().assign(s.begin(), s.end());
+    // return;
 }
 
 
@@ -48,7 +54,9 @@ VertexSubset Interface::EdgeMapSparse(const Graph &graph,
             }    
         }
     }
-    RemoveDuplicates(Out); //TO DO: confirm if it remains in the scope
+    std::sort(Out.getVertexSubset().begin(), Out.getVertexSubset().end());
+    Out.getVertexSubset().erase(std::unique(Out.getVertexSubset().begin(), Out.getVertexSubset().end()), Out.getVertexSubset().end());
+    //RemoveDuplicates(Out); //TO DO: confirm if it remains in the scope
     return Out;
 }
 
@@ -97,15 +105,17 @@ VertexSubset Interface::EdgeMapDenseWrite(const Graph &graph,
             for(auto ngh = v->getOutNeighboursBegin(); ngh < v->getOutNeighboursEnd(); ngh++)
             {
                 if(C(*ngh) && F(i, *ngh))
-                    Out.addVertex(*ngh);  
+                    Out.addVertex(*ngh);
             }
         }
     }
+    std::sort(Out.getVertexSubset().begin(), Out.getVertexSubset().end());
+    Out.getVertexSubset().erase(std::unique(Out.getVertexSubset().begin(), Out.getVertexSubset().end()), Out.getVertexSubset().end());    
     return Out;
 }
 
-VertexSubset Interface::VertexMap(const VertexSubset &U, 
-                                         const std::function<bool(long vertexIndex)> &F)
+VertexSubset Interface::VertexMap(const VertexSubset &U,
+                                  const std::function<bool(long vertexIndex)> &F)
 {
     VertexSubset Out;
     //TO DO: parallel
@@ -114,6 +124,6 @@ VertexSubset Interface::VertexMap(const VertexSubset &U,
         if(F(*v))
             Out.addVertex(*v);
     }
-    std::cout<<std::endl;
+    //std::cout<<std::endl;
     return Out;
 }   

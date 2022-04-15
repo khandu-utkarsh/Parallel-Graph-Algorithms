@@ -9,17 +9,13 @@ int main(int argc, char** argv)
 {
     std::cout << "Execution started" << std::endl;
 
-
-    //!If first argument 1, input from jason file
-    //!If first argument 2, input from text file
-
     //!Hard coding all the file Names;
     std::vector<std::string> fileNames;
-    fileNames.emplace_back("/data/tinyEWD.txt");
-    fileNames.emplace_back("/data/mediumEWD.txt");    
-//    fileNames.emplace_back("/data/largeEWD.txt");    
-//    fileNames.emplace_back("/data/1000EWD.txt");    
-//    fileNames.emplace_back("/data/10000EWD.txt");
+    fileNames.emplace_back("tinyEWD.txt");
+    fileNames.emplace_back("mediumEWD.txt");
+//    fileNames.emplace_back("largeEWD.txt");
+    fileNames.emplace_back("1000EWD.txt");
+    fileNames.emplace_back("10000EWD.txt");
 
 
     //!Getting the current path
@@ -28,9 +24,28 @@ int main(int argc, char** argv)
     for(size_t fileCount = 0; fileCount < fileNames.size(); ++fileCount)    //!Do all operations in this loop
     {
         auto currFileName = fileNames[fileCount];
-        std::cout << "Reading graph from " << currFileName <<std::endl;
-        std::string fullFilePath = currPath + currFileName;
+        std::string currFileNameAppended =  std::string("/data/") + currFileName;
+
+        std::cout << "Reading graph from " << currFileNameAppended <<std::endl;
+
+        std::string fullFilePath = currPath + currFileNameAppended;
         Graph currGraph(fullFilePath);
+
+        //!Create a new log file here
+        std::string fulLogPath = currPath + std::string("/test/log_") + currFileName;
+    
+        std::fstream fileStream(fulLogPath, std::ios::app);
+        fileStream << " " << std::endl;
+        fileStream << " " << std::endl;
+        fileStream << " " << std::endl;
+        fileStream << " " << std::endl;
+        fileStream << "================" << std::endl;
+        fileStream << "================" << std::endl;
+        fileStream << "New Run" << std::endl;
+
+        Test test;
+        test.DoTestingOnThisGraph(currGraph, fulLogPath);
+
         int tempDebugVar = 0;
     }
     std::cout << "Exited into main fxn" << std::endl;

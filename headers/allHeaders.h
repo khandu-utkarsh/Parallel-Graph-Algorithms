@@ -5,6 +5,7 @@
 #include"vertex.h"
 #include"vertexId.h"
 #include"vertexSubset.h"
+#include"test.h"
 
 #include "../ext/json.hpp"
 #include <fstream>

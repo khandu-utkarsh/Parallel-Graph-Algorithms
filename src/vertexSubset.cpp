@@ -1,6 +1,6 @@
 #include "../headers/allHeaders.h"
 
-std::vector<long> VertexSubset::getVertexSubset() const
+std::vector<long> & VertexSubset::getVertexSubset()
 {
     return p_vertices;
 }
@@ -20,13 +20,24 @@ void VertexSubset::setVertexSubset(std::vector<long> v)
 }
 
 void VertexSubset::printVertexSubset()
-{    
-    std::cout<<"Vertex Subset:";
+{
+    std::cout<<"Vertex Subset Vertices Ids: ";
     for(auto it = p_vertices.begin(); it < p_vertices.end(); it++)
         std::cout<<*it<<" ";
     
-    std::cout<<std::endl;
+    std::cout << std::endl;
 }
+
+void VertexSubset::LogIntoFile(std::fstream &out)
+{
+    out <<"VertexSubset Vertices Ids: ";
+    for(auto it = p_vertices.begin(); it < p_vertices.end(); it++)
+        out << *it <<" ";
+
+    out << std::endl;
+}
+
+
 
 long VertexSubset::getVertexSubsetLength() const
 {

@@ -33,7 +33,7 @@ class Interface
 {
     public:
 
-    static std::set<long> convertToSet(std::vector<long> v);
+    static std::set<long> convertToSet(std::vector<long> &v);
 
     static void RemoveDuplicates(VertexSubset &U); //TO DO: This function removes the duplicates from a vector
 
